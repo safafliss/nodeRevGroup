@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat List</title>
+</head>
+<body>
+    <h1>Chat List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date Sent</th>
+                <th>Message</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for chat in list %}
+                <tr> 
+                    <td>{{ chat.dateSent }}</td>
+                    <td>{{ chat.message}}</td>
+                    <td> <button onclick="deleteChat('{{ chat._id }}')">delete</button></td>
+                    <td> <button>edit</button></td>
+                    <!-- Add more table cells with user data if needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        function deleteChat(chatId) {
+            fetch(`/chatCrud/deleteChat/${chatId}`, {
+                method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                location.reload();
+                // You can update the user list or perform any other actions after successful deletion
+            })
+            .catch(error => {
+                console.error(error);
+                // Handle any errors that occurred during the deletion process
+            });
+        }
+    </script>
+</body>
+
+</html>

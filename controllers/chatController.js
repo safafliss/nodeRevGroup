@@ -46,10 +46,36 @@ const addChat = async (req, res, next) => {
       (err) => res.status(500).json(err);
     }
   };
+
+  const getChatDatabyid = async (req, res, next) => {
+    const chatId = req.params.id;
+    try {
+      const chatData = await chat.findOne({ _id: chatId });
+      console.log(chatData);
+      res.render('updateChat.twig', { chat: chatData });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  };
+  
+  // const getChatDatabyid=(req, res)=>{
+  //   const chatId = req.params.id;
+      
+  //   chat.findById(chatId, (err, chatData) => {
+  //     if (err) {
+  //       console.error(err);
+  //       res.status(500).send('Internal Server Error');
+  //     } else {
+  //       res.render('updateChat.twig', { chat: chatData });
+  //     }
+  //   });
+  // }
+
 const modifChat = async (req, res, next) => {
     try {
       await chat.findByIdAndUpdate(req.params.id, { $set: req.body });
-      res.status(200).json(itemToUpdate);
+      res.redirect('/chatCrud/listChat');
+      //res.status(200).json(itemToUpdate);
     } catch (error) {
       res.json(error);
     }
@@ -63,4 +89,17 @@ const deleteChat = async (req, res, next) => {
       res.json(error);
     }
   };
-module.exports = {addChat, listChat, modifChat, deleteChat}
+ 
+
+  const searchByChat = async (req, res) => {
+    try {
+      const chatMsg = req.query.message;
+      const chatData = await chat.find({ message: chatMsg });
+      res.render('listChat.twig', { list: chatData });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  };
+  
+module.exports = {addChat, listChat, modifChat, deleteChat, getChatDatabyid, searchByChat}

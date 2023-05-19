@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Chat</title>
+</head>
+<body>
+    <h1>Update Chat</h1>
+    <form action="/chatCrud/modifChat/{{ chat._id }}" method="POST">
+        <label for="dateSent">Sent Date:</label>
+        <input type="date" id="dateSent" name="dateSent" value="{{ chat.dateSent }}" required>
+        
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" value="{{ chat.message }}" required>
+        
+        <button type="submit">Update Chat</button>
+    </form>
+</body>
+</html>

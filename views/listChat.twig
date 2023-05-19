@@ -5,6 +5,14 @@
 </head>
 <body>
     <h1>Chat List</h1>
+    <br></br>
+    <a href="/chatCrud/create">Create chat</a>
+    <br></br>
+    <form action="/chatCrud/search" method="GET">
+        <label for="message">chat:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Search</button>
+    </form>
     <table>
         <thead>
             <tr>
@@ -19,7 +27,7 @@
                     <td>{{ chat.dateSent }}</td>
                     <td>{{ chat.message}}</td>
                     <td> <button onclick="deleteChat('{{ chat._id }}')">delete</button></td>
-                    <td> <button>edit</button></td>
+                    <td> <button onclick="editChat('{{ chat.id }}')">edit</button></td>
                     <!-- Add more table cells with user data if needed -->
                 </tr>
             {% endfor %}
@@ -41,6 +49,11 @@
                 // Handle any errors that occurred during the deletion process
             });
         }
+
+        function editChat(chatId) {
+        // Redirect to the update user page
+        window.location.href = `/chatCrud/getChat/${chatId}`;
+    }
     </script>
 </body>
 
